@@ -3,14 +3,42 @@
 # dict's values should be a number (0-100),
 # example:[{'a': 5, 'b': 7, 'g': 11}, {'a': 3, 'c': 35, 'g': 42}]
 
-# creating dictionaries a,b,c
-a = {'a': 53, 'b': 40, 'c': 89, 'f': 58}
-b = {'a': 21, 'c': 98, 'y': 5}
-c = {'a': 1, 'c': 7, 'o': 8}
+# importing required libraries
+import random
+import string
 
-# creating new_list with the variables referring to created dicts
-new_list = [a, b, c]
-print(new_list)
+
+# creating function that will create single dictionary
+def create_dict():
+    # defining blank dictionary
+    result = {}
+    # for loop to iterate random times (random.randint will choose random number n and in range (0,n) loop will work)
+    # as far as number of occurrences for the number of key:value pairs wasn't chosen I decided to set from 4 to 10
+    for pair in range(random.randint(2, 26)):
+        # defining key as random.choice from sequence of lowercase letter
+        key = random.choice(string.ascii_lowercase)
+        # defining value as random randint from 1 to 100
+        value = random.randint(1, 100)
+        # adding new key:value pair into result
+        result[key] = value
+    # function returns dictionary result
+    return result
+
+
+# defining function that will create list of dictionaries
+def create_list_dict():
+    # defining blank list
+    result_list = []
+    # for loop to iterate random times (random.randint will choose random number n and in range (0,n) loop will work)
+    for created_dict in range(random.randint(2, 10)):
+        # running create_dict() function and adding it into result_list
+        result_list.append(create_dict())
+    # returning result list
+    return result_list
+
+
+# running create_list_dict() function and assigning it to the new_list variable
+new_list = create_list_dict()
 
 # 2. get previously generated list of dicts and create one common dict:
 # if dicts have same key, we will take max value, and rename key with dict number with max value
@@ -18,7 +46,7 @@ print(new_list)
 # example:{'a_1': 5, 'b': 7, 'c': 35, 'g_2': 42}
 
 # creating blank dictionaries to store:
-# intemidiate key:value pair with maximum value
+# intermediate key:value pair with maximum value
 interm_dict = {}
 # index of key:value pair
 index_dict = {}
@@ -60,9 +88,10 @@ for key, value in interm_dict.items():
         # than adding new key:value pair where key is created from pattern "key + _ + value of this key in the
         # index_dict and value is current value
         result_dict[f'{key}_{index_dict[key]}'] = value
-    # if values if this key is not more than 1, i.e. it is 1 in our case
+    # if values is this key is not more than 1, i.e. it is 1 in our case
     else:
         # than adding new key:value pair as is
         result_dict[key] = value
+
 # printing final result
 print(result_dict)
