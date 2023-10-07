@@ -1,0 +1,13 @@
+operation_type: currency_conversion;
+from_currency: usD;
+to_currency: GBP;
+exchange_rate: 1.25;
+city: LoNDoN
+/   
+operation_type: news;
+input_text: Upcoming Concert in New York City;
+city: NeW YoRk;
+/   
+operation_type: private advertisement;
+input_text: Selling a Vintage Car;
+expir_date: 2023-12-15;

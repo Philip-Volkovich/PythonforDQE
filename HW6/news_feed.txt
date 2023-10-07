@@ -1,0 +1,30 @@
+ CurrencyConversion--------------
+ Todays rate: 1 Usd = 1.25 Gbp
+ London, 2023-10-07, 16:26
+        
+
+ News------------------
+ Upcoming concert in new york city 
+ New york. 2023-10-07, 16:26
+        
+
+ PrivateAd--------------
+ Selling a vintage car 
+ Actual until: 2023-12-15, 69 days left
+        
+
+ News------------------
+ Some news happened 
+ Somewhere. 2023-10-07, 16:27
+        
+
+ PrivateAd--------------
+ Smth to sell 
+ Actual until: 2025-03-01, 511 days left
+        
+
+ CurrencyConversion--------------
+ Todays rate: 1 USD = 2.7 GEL
+ Tbilisi, 2023-10-07, 16:27
+        
+
