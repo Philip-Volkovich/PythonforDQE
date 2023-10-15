@@ -7,6 +7,7 @@ from feed_class.private_ad import PrivateAd
 from utilits.source_parser import TextParser
 from utilits.csv_creator import CsvCreator
 from utilits.json_parser import JsonParser
+from utilits.xml_parser import XmlParser
 
 
 class AppRunner:
@@ -22,7 +23,8 @@ class AppRunner:
             print("1. Console mode")
             print("2. Load from txt")
             print("3. Load from json")
-            print("4. Exit")
+            print("4. Load from xml")
+            print("5. Exit")
             main_choice = input("Enter your choice: ")
 
             if main_choice == '1':
@@ -97,7 +99,26 @@ class AppRunner:
                 else:
                     print(
                         f"The specified file '{full_file_path}' does not exist. Please provide a valid file path.")
+
             elif main_choice == '4':
+                file_name = input("Enter the name of the XML file: ")
+                file_path = input('''Enter the path of the XML file ends with file folder name
+                                  (press Enter for default path):''').strip()
+
+                if not file_path:
+                    file_path = os.path.join(sys.path[0], self.source_files)
+
+                full_file_path = os.path.join(file_path, file_name)
+
+                if os.path.exists(full_file_path):
+                    xml_parser = XmlParser(file_name)
+                    xml_parser.load_from_xml(file_path)
+                    xml_parser.parse_from_xml()
+                else:
+                    print(
+                        f"The specified file '{full_file_path}' does not exist. Please provide a valid file path.")
+
+            elif main_choice == '5':
                 print('Exiting the program')
                 break
 
