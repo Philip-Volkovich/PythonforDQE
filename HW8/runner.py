@@ -37,20 +37,23 @@ class AppRunner:
                     choice = input("Enter your choice: ")
 
                     if choice == '1':
-                        # news_feed = NewsFeed('news')
-                        # news_feed.add_record()
-                        # news_feed.add_publication()
                         input_text = input('Enter the news text: ')
                         city = input('Enter the news city: ')
                         news_feed = NewsFeed('news')
                         news_feed.record = News(input_text, city)
                         news_feed.add_publication()
+                        csv_creator = CsvCreator(sys.path[0])
+                        csv_creator.word_counter()
+                        csv_creator.letter_count()
                     elif choice == '2':
                         input_text = input('Enter the private advertisement text: ')
                         expir_date = input('Enter expiration date (YYYY-MM-DD): ')
                         news_feed = NewsFeed('private advertisement')
                         news_feed.record = PrivateAd(input_text, expir_date)
                         news_feed.add_publication()
+                        csv_creator = CsvCreator(sys.path[0])
+                        csv_creator.word_counter()
+                        csv_creator.letter_count()
                     elif choice == '3':
                         currency_from = input('Enter FROM which currency you want to convert (3 capital letters, e.g., USD): ')
                         currency_to = input('Enter TO which currency you want to convert (3 capital letters, e.g., USD): ')
@@ -59,6 +62,9 @@ class AppRunner:
                         news_feed = NewsFeed('currency conversion rate')
                         news_feed.record = CurrencyConversion(currency_from, currency_to, rate, city)
                         news_feed.add_publication()
+                        csv_creator = CsvCreator(sys.path[0])
+                        csv_creator.word_counter()
+                        csv_creator.letter_count()
                     elif choice == '4':
                         print("Exiting the console mode.")
                         break
@@ -78,6 +84,9 @@ class AppRunner:
                     text_parser = TextParser(file_name)
                     text_parser.parse_from_text(file_path)
                     text_parser.line_parser()
+                    csv_creator = CsvCreator(sys.path[0])
+                    csv_creator.word_counter()
+                    csv_creator.letter_count()
                 else:
                     print(
                         f"The specified file '{full_file_path}' does not exist. Please provide a valid file path.")
@@ -96,6 +105,9 @@ class AppRunner:
                     json_parser = JsonParser(file_name)
                     json_parser.load_from_json(file_path)
                     json_parser.parse_from_json()
+                    csv_creator = CsvCreator(sys.path[0])
+                    csv_creator.word_counter()
+                    csv_creator.letter_count()
                 else:
                     print(
                         f"The specified file '{full_file_path}' does not exist. Please provide a valid file path.")
@@ -114,6 +126,9 @@ class AppRunner:
                     xml_parser = XmlParser(file_name)
                     xml_parser.load_from_xml(file_path)
                     xml_parser.parse_from_xml()
+                    csv_creator = CsvCreator(sys.path[0])
+                    csv_creator.word_counter()
+                    csv_creator.letter_count()
                 else:
                     print(
                         f"The specified file '{full_file_path}' does not exist. Please provide a valid file path.")
@@ -121,11 +136,6 @@ class AppRunner:
             elif main_choice == '5':
                 print('Exiting the program')
                 break
-
-        csv_creator = CsvCreator(sys.path[0])
-        csv_creator.word_counter()
-        csv_creator.letter_count()
-
 
 if __name__ == "__main__":
     run_app = AppRunner()
