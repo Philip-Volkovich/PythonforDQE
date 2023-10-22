@@ -8,6 +8,7 @@ from utilits.source_parser import TextParser
 from utilits.csv_creator import CsvCreator
 from utilits.json_parser import JsonParser
 from utilits.xml_parser import XmlParser
+from utilits.db_connection import DBConnection
 
 
 class AppRunner:
@@ -42,6 +43,12 @@ class AppRunner:
                         news_feed = NewsFeed('news')
                         news_feed.record = News(input_text, city)
                         news_feed.add_publication()
+                        db_record = DBConnection('new_db')
+                        db_record.db_create('news',db_record.columns_news)
+                        db_record.db_insert('news',"input_text, city, date",
+                                            f"""'{news_feed.record.input_text}',
+                                            '{news_feed.record.city}',
+                                            '{news_feed.record.date}'""")
                         csv_creator = CsvCreator(sys.path[0])
                         csv_creator.word_counter()
                         csv_creator.letter_count()
@@ -51,6 +58,12 @@ class AppRunner:
                         news_feed = NewsFeed('private advertisement')
                         news_feed.record = PrivateAd(input_text, expir_date)
                         news_feed.add_publication()
+                        db_record = DBConnection('new_db')
+                        db_record.db_create('private_ad',db_record.columns_private_ad)
+                        db_record.db_insert('private_ad',"input_text, expir_date, days_left",
+                                            f"""'{news_feed.record.input_text}',
+                                            '{news_feed.record.expir_date}',
+                                            '{news_feed.record.days_left}'""")
                         csv_creator = CsvCreator(sys.path[0])
                         csv_creator.word_counter()
                         csv_creator.letter_count()
@@ -62,6 +75,14 @@ class AppRunner:
                         news_feed = NewsFeed('currency conversion rate')
                         news_feed.record = CurrencyConversion(currency_from, currency_to, rate, city)
                         news_feed.add_publication()
+                        db_record = DBConnection('new_db')
+                        db_record.db_create('currency_conv',db_record.columns_currency_conv)
+                        db_record.db_insert('currency_conv',"currency_from, currency_to, rate, city, date",
+                                            f"""'{news_feed.record.currency_from}',
+                                            '{news_feed.record.currency_to}',
+                                            '{news_feed.record.rate}',
+                                            '{news_feed.record.city}',
+                                            '{news_feed.record.date}'""")
                         csv_creator = CsvCreator(sys.path[0])
                         csv_creator.word_counter()
                         csv_creator.letter_count()

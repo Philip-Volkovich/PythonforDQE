@@ -4,7 +4,7 @@ from feed_class.news import News
 from feed_class.private_ad import PrivateAd
 from feed_class.currency_conv import CurrencyConversion
 from utilits.text_functions import convert_to_normalized_case
-
+from utilits.db_connection import DBConnection
 
 class TextParser:
     def __init__(self, file_name):
@@ -44,16 +44,29 @@ class TextParser:
                     record_dict[key] = value
                     operation_type = record_dict.get('operation_type')
 
-            if operation_type == 'news':
+            if (operation_type == 'news'):
                 news_feed = NewsFeed('news')
                 news_feed.record = News(convert_to_normalized_case(record_dict.get('input_text')),
                                         convert_to_normalized_case(record_dict.get('city')))
                 news_feed.add_publication()
+                db_record = DBConnection('new_db')
+                db_record.db_create('news', db_record.columns_news)
+                db_record.db_insert('news', "input_text, city, date",
+                                    f"""'{news_feed.record.input_text}',
+                                     '{news_feed.record.city}',
+                                     '{news_feed.record.date}'""")
+
             elif operation_type == 'private advertisement':
                 news_feed = NewsFeed('private advertisement')
                 news_feed.record = PrivateAd(convert_to_normalized_case(record_dict.get('input_text')),
                                              record_dict.get('expir_date'))
                 news_feed.add_publication()
+                db_record = DBConnection('new_db')
+                db_record.db_create('private_ad', db_record.columns_private_ad)
+                db_record.db_insert('private_ad', "input_text, expir_date, days_left",
+                                    f"""'{news_feed.record.input_text}',
+                                    '{news_feed.record.expir_date}',
+                                    '{news_feed.record.days_left}'""")
             elif operation_type == 'currency_conversion':
                 news_feed = NewsFeed('currency_conversion')
                 news_feed.record = CurrencyConversion(convert_to_normalized_case(record_dict.get('from_currency')),
@@ -61,6 +74,14 @@ class TextParser:
                                                       record_dict.get('exchange_rate'),
                                                       convert_to_normalized_case(record_dict.get('city')))
                 news_feed.add_publication()
+                db_record = DBConnection('new_db')
+                db_record.db_create('currency_conv', db_record.columns_currency_conv)
+                db_record.db_insert('currency_conv', "currency_from, currency_to, rate, city, date",
+                                    f"""'{news_feed.record.currency_from}',
+                                    '{news_feed.record.currency_to}',
+                                    '{news_feed.record.rate}',
+                                    '{news_feed.record.city}',
+                                    '{news_feed.record.date}'""")
             else:
                 print(f'Invalid record: {record_str}. Please check the file.')
 
@@ -68,3 +89,5 @@ class TextParser:
                 os.remove(self.full_path)
             except FileNotFoundError:
                 pass
+
+
